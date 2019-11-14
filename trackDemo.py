@@ -50,7 +50,10 @@ class App:
                     new_tracks.append(tr)
                     cv.circle(vis, (x, y), 2, (0, 255, 0), -1)
                 self.tracks = new_tracks
-                cv.polylines(vis, [np.int32(tr) for tr in self.tracks], False, (0, 255, 0))
+                for tr in self.tracks:
+                    if np.sqrt(np.sum(np.power(np.array(tr[-1])-np.array(tr[0]), 2)))>5:
+                        cv.polylines(vis, [np.int32(tr)], False, (0, 255, 0))
+                # cv.polylines(vis, [np.int32(tr) for tr in self.tracks ], False, (0, 255, 0))
                 draw_str(vis, (20, 20), 'track count: %d' % len(self.tracks))
 
             if self.frame_idx % self.detect_interval == 0:
