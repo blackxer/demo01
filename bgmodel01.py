@@ -7,6 +7,7 @@ import datetime
 import multiprocessing
 
 SAVE_VIDEO_NAME = {
+    # "/media/zw/DL/ly/workspace/project07/demo01/data/2/2019-11-08 11:27:22.avi": "1"
     "/media/zw/DL/ly/workspace/project07/demo01/data/2/2019-11-08 13:17:27.avi": "1",
     # "/media/zw/DL/ly/workspace/project07/demo01/video_out.avi": "2",
 }
@@ -27,7 +28,7 @@ KERNEL = []
 
 def analyse(video_source):
     argparser = argparse.ArgumentParser(description='Vizualization of the LSBP/GSOC background subtraction algorithm.')
-    argparser.add_argument('-a', '--algorithm', help='Test particular algorithm instead of all.', default='CNT')
+    argparser.add_argument('-a', '--algorithm', help='Test particular algorithm instead of all.', default='MOG2')
     args = argparser.parse_args()
 
     VIDEO_NAME = video_source #"rtsp://admin:hk123456@112.250.110.15:554/Streaming/Channels/101?transportmode=unicast"
@@ -79,7 +80,7 @@ def analyse(video_source):
             for cnt in contours:
                 area = cv.contourArea(cnt)
                 print(area)
-                if area>100:
+                if area>0:
                     x,y,w,h = cv.boundingRect(cnt)
                     cv.rectangle(frame,(x,y),(x+w,y+h),(0,255,0),1)
                     # cv.drawContours(f[i], [cnt], 0, (0,255,0),3)
